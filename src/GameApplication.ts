@@ -1,4 +1,4 @@
-import * as PIXI from "pixi.js";
+import * as PIXI from 'pixi.js';
 
 export class GameApplication extends PIXI.Application {
 
@@ -6,6 +6,7 @@ export class GameApplication extends PIXI.Application {
     public static STAGE_HEIGHT: number = 600;
 
     private static app: GameApplication;
+    private mainContainer: PIXI.Container;
 
     constructor() {
         super(GameApplication.getAppOptions());
@@ -18,13 +19,20 @@ export class GameApplication extends PIXI.Application {
 
     private init() {
         GameApplication.app = this;
+        this.mainContainer = new PIXI.Container();
+        this.loader = new PIXI.Loader();
+        this.loader.onComplete.add(this.onLoadComplete, this);
 
         window.onload = () => {
             const gameContainer: HTMLCanvasElement = document.getElementById("gameContainer") as HTMLCanvasElement;
             gameContainer.appendChild(this.view);
+            this.stage.addChild(this.mainContainer);
 
             this.resizeCanvas();
             this.loadAssets();
+            this.showText();
+            this.createButton();
+            this.createContainers();
 
             this.view.style.position = 'absolute';
             this.view.style.left = '50%';
@@ -35,23 +43,44 @@ export class GameApplication extends PIXI.Application {
 
     private static getAppOptions() {
         return {
-            backgroundColor: 0x000000,
+            backgroundColor: 0x989c99,
             width: GameApplication.STAGE_WIDTH,
             height: GameApplication.STAGE_HEIGHT,
         }
     }
 
     private resizeCanvas(): void {
-        const resize = () => {
-            this.renderer.resize(GameApplication.STAGE_WIDTH, GameApplication.STAGE_HEIGHT);
-        };
+        this.onResize();
 
-        resize();
+        window.addEventListener('resize', this.onResize);
+    }
 
-        window.addEventListener("resize", resize);
+    private onResize() {
+        this.renderer.resize(GameApplication.STAGE_WIDTH, GameApplication.STAGE_HEIGHT);
     }
 
     private loadAssets() {
+
+        // Load sunshine image
+
+        // Load siren
+
+    }
+
+    private showText() {
+        // show some text
+
+    }
+
+    private createContainers() {
+
+    }
+
+    private createButton() {
+        
+    }
+
+    private onLoadComplete() {
 
     }
 

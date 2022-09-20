@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 
 const path = require("path");
 
@@ -32,7 +31,12 @@ module.exports = {
             filename: 'index.html',
             template: './src/index.html',
             inject: 'body'
-        })
+        }),
+        new CopyPlugin({
+            patterns: [
+              { from: "src/assets", to: "assets" }
+            ],
+          }),
     ],
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
@@ -42,7 +46,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         clean: true
     },
-    devtool: 'source-map',
+    devtool: 'eval-cheap-module-source-map',
     devServer: {
         static: {
             directory: path.resolve(__dirname, 'dist')
